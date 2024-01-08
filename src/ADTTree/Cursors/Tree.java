@@ -14,11 +14,12 @@ public class Tree {
         }
     }
     private final static Item[] array;
+    private final static int LENGTH = 100;
     private static int SPACE;
-    private int root;
+    private int root = -1;
 
     static {
-        array = new Item[100];
+        array = new Item[LENGTH];
         SPACE = 0;
         for (int i = 0; i < array.length - 1; i++) {
             array[i] = new Item(i + 1);
@@ -26,80 +27,130 @@ public class Tree {
         array[array.length - 1] = new Item(-1);
     }
 
-    private int findParent(int root, int n) {
-        if (root == n) return root;
-
-        int res = -1, tmp = root;
-
-
-
-        return res;
-    }
-
     /*
     Возвращает родителя узла n
      */
     public int parent(int n) {
-        int i = root;
-        while (i != -1) {
-
-        }
+        return findParent(root, n);
     }
 
     /*
     Возвращает левого сына узла n
      */
     public int leftMostChild(int n) {
-        return 0;
+        int item = findParent(root, n);
+        if (item == -1) return -1;
+        return array[item].LMC;
     }
 
     /*
     Возвращает правого брата узла n
      */
     public int rightSibling(int n) {
-        return 0;
+        int item = findParent(root, n);
+        if (item == -1) return -1;
+        item = array[item].LMC;
+        while (item != n) {
+            item = array[item].RSL;
+        }
+        return array[item].RSL;
     }
 
     /*
     Возвращает метку узла
      */
     public String label(int n) {
-        return null;
+        if (n==root) return array[n].label;
+        int temp = findParent(n, root);
+        if (temp != -1) {
+            return array[n].label;
+        }
+        else throw new RuntimeException("No such element in this tree");
     }
 
     /*
     Создаёт новое дерево с 1 узлом и меткой V
      */
-    public void CREATE(String V) {
-        root = SPACE;
-        SPACE = array[SPACE].LMC;
+    public Tree CREATE(String V) {
+        if (SPACE == -1) return null;
+        array[SPACE].label = V;
+        if (root != -1) {
+            array[SPACE].LMC = root;
+            root = SPACE;
+            SPACE = array[SPACE].LMC;
+        }
+        else {
+            root = SPACE;
+            SPACE = array[SPACE].LMC;
+            array[root].LMC  = -1;
+        }
+        return this;
     }
 
     /*
     Создаёт корень дерева с меткой V и 1 узел T
      */
-    public void CREATE(String V, Tree T) {
-
-    }
-
-    /*
-    Создаёт корень дерева с меткой V и 2 узла T1 и T2
-     */
-    public void CREATE(String V, Tree T1, Tree T2) {
-
+    public Tree CREATE(String V, Tree T) {
+        if (SPACE == -1) return null;
+        if (root == -1) return T.CREATE(V);
+        if (T.root == -1) return CREATE(V);
+        array[SPACE].label = V;
+        array[SPACE].LMC = root;
+        array[root].RSL = T.root;
+        root = SPACE;
+        T.root = -1;
+        SPACE = array[SPACE].LMC;
+        return this;
     }
 
     /*
     Возвращает корень дерева
      */
     public int root() {
-        return 0;
+        return root;
     }
 
     /*
     Обнуляет дерево
      */
     public void makeNull() {
+        if (root == -1) return;
+        clearBranch(root);
+        root = -1;
+    }
 
+    private void clearBranch(int root) {
+        int child = array[root].LMC;
+        while (child != -1) {
+            clearBranch(child);
+            child = array[child].RSL;
+        }
+
+        array[root].LMC = SPACE;
+        array[root].RSL = -1;
+        array[root].label = null;
+        SPACE = root;
+    }
+
+    private int findParent(int root, int n) {
+        int child = array[root].LMC;
+        while (child != -1) {
+            if (child == n) return root;
+            int res = findParent(child, n);
+            if (res != -1)
+                return res;
+            child = array[child].RSL;
+        }
+        return -1;
+    }
+
+    public static void printArray(){ // вывод в виде массива
+        for (int i = 0; i < LENGTH; i++){
+            System.out.println(i + ": " +
+                    array[i].LMC + " " +
+                    array[i].label + " " +
+                    array[i].RSL);
+        }
+        System.out.println();
     }
 }
