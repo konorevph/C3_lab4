@@ -8,6 +8,7 @@ public class Main {
         tree2 = tree2.CREATE("label2");
 //        Tree.printArray();
         tree = tree.CREATE("label3", tree2);
+//        tree.makeNull();
         System.out.println(tree);
         Tree.printArray();
     }

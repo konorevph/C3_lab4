@@ -6,25 +6,30 @@ public class Tree {
         private String label;
         private int RSL;
 
-        private Item(int LMC)
+        private Item(int RSL, int LMC, String label)
         {
             this.LMC = LMC;
-            label = "";
-            RSL = -1;
+            this.label = label;
+            this.RSL = RSL;
         }
     }
     private final static Item[] array;
-    private final static int LENGTH = 100;
+    private final static int LENGTH = 10;
     private static int SPACE;
-    private int root = -1;
+    private int root;
 
     static {
-        array = new Item[LENGTH];
         SPACE = 0;
+        array = new Item[LENGTH];
         for (int i = 0; i < array.length - 1; i++) {
-            array[i] = new Item(i + 1);
+            array[i] = new Item(-1,i + 1, "");
         }
-        array[array.length - 1] = new Item(-1);
+        array[array.length - 1] = new Item(-1, -1, "");
+    }
+
+    public Tree()
+    {
+        root = -1;
     }
 
     /*
@@ -38,9 +43,14 @@ public class Tree {
     Возвращает левого сына узла n
      */
     public int leftMostChild(int n) {
+        // Если нет корня
+        if (root == -1) return -1;
+        // Если ищем сына для корня
+        if (n == root) return array[root].LMC;
+        // Рекурсивный метод по поиску узла с именем n
         int item = findParent(root, n);
         if (item == -1) return -1;
-        return array[item].LMC;
+        return array[n].LMC;
     }
 
     /*
@@ -65,7 +75,7 @@ public class Tree {
         if (temp != -1) {
             return array[n].label;
         }
-        else throw new RuntimeException("No such element in this tree");
+        throw new RuntimeException("No such element in this tree");
     }
 
     /*
@@ -73,17 +83,17 @@ public class Tree {
      */
     public Tree CREATE(String V) {
         if (SPACE == -1) return null;
-        array[SPACE].label = V;
+        int newRoot = SPACE;
+        SPACE = array[SPACE].LMC;
+
+        array[newRoot].label = V;
         if (root != -1) {
-            array[SPACE].LMC = root;
-            root = SPACE;
-            SPACE = array[SPACE].LMC;
+            array[newRoot].LMC = root;
         }
         else {
-            root = SPACE;
-            SPACE = array[SPACE].LMC;
-            array[root].LMC  = -1;
+            array[newRoot].LMC = -1;
         }
+        root = newRoot;
         return this;
     }
 
@@ -94,12 +104,15 @@ public class Tree {
         if (SPACE == -1) return null;
         if (root == -1) return T.CREATE(V);
         if (T.root == -1) return CREATE(V);
-        array[SPACE].label = V;
-        array[SPACE].LMC = root;
-        array[root].RSL = T.root;
-        root = SPACE;
-        T.root = -1;
+
+        int newRoot = SPACE;
         SPACE = array[SPACE].LMC;
+
+        array[newRoot].label = V;
+        array[newRoot].LMC = root;
+        array[root].RSL = T.root;
+        root = newRoot;
+        T.root = -1;
         return this;
     }
 
@@ -127,8 +140,7 @@ public class Tree {
         }
 
         array[root].LMC = SPACE;
-        array[root].RSL = -1;
-        array[root].label = null;
+        array[root].label = "";
         SPACE = root;
     }
 
@@ -145,11 +157,13 @@ public class Tree {
     }
 
     public static void printArray(){ // вывод в виде массива
+        System.out.println(" # LMC RSL Label");
         for (int i = 0; i < LENGTH; i++){
-            System.out.println(i + ": " +
-                    array[i].LMC + " " +
-                    array[i].label + " " +
-                    array[i].RSL);
+            System.out.printf("%2d  %2d  %2d %s\n",
+                    i,
+                    array[i].LMC,
+                    array[i].RSL,
+                    array[i].label);
         }
         System.out.println();
     }
