@@ -21,7 +21,7 @@ public class Main {
         int child = tree.leftMostChild(root);
         symmetricBypass(tree, child);
         System.out.println(tree.label(root));
-        while (child >= 0) {
+        while (child >= 0) { // todo проверить выводится ли -1 на списке сыновей
             child = tree.rightSibling(child);
             symmetricBypass(tree, child);
         }
