@@ -71,7 +71,7 @@ public class Tree {
      */
     public String label(int n) {
         if (n==root) return array[n].label;
-        int temp = findParent(n, root);
+        int temp = findParent(root, n);
         if (temp != -1) {
             return array[n].label;
         }

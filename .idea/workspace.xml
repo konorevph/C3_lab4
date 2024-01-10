@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36b61e04-2a09-4784-8ab9-4e0c79318ba2" name="Changes" comment="Объединение веток">
+    <list default="true" id="36b61e04-2a09-4784-8ab9-4e0c79318ba2" name="Changes" comment="Наброски варианта на курсорах">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ADTTree/Cursors/Tree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ADTTree/Cursors/Tree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ADTTree/SonsList/Tree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ADTTree/SonsList/Tree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,6 +21,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Rebase.Settings">
+    <option name="NEW_BASE" value="origin/master" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
