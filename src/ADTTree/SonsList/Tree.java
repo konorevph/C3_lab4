@@ -46,7 +46,7 @@ public class Tree {
         while (son != null) {
             if (son.alias == n) return root;
 
-            int res = findParent(son.alias, root);
+            int res = findParent(son.alias, n);
             if (res != -1)
                 return res;
             son = son.next;
@@ -66,9 +66,9 @@ public class Tree {
      */
     public int leftMostChild(int n) {
         if (root == -1) return -1;
-        if (root == n) return array[root].son.alias;
+        if (root == n) return (array[root].son != null ? array[root].son.alias : -1);
         int item = findParent(root, n);
-        if (item == -1) return -1;
+        if (item == -1 || array[n].son == null) return -1;
         return array[n].son.alias;
     }
 
@@ -77,10 +77,12 @@ public class Tree {
      */
     public int rightSibling(int n) {
         int item = findParent(root, n);
-        if (item != -1 && array[item].son.next != null) {
-            return array[item].son.next.alias;
+        if (item == -1) return -1;
+        var listElem = array[item].son;
+        while (listElem.alias != n) {
+            listElem = listElem.next;
         }
-        return -1;
+        return listElem.next != null ? listElem.next.alias : -1;
     }
 
     /*

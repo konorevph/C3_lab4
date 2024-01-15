@@ -1,4 +1,4 @@
-import ADTTree.Cursors.Tree;
+import ADTTree.SonsList.Tree;
 
 public class Main {
     public static void main(String[] args) {
