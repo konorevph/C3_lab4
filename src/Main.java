@@ -4,13 +4,14 @@ public class Main {
     public static void main(String[] args) {
         Tree tree = new Tree();
         Tree tree2 = new Tree();
-        tree = tree.CREATE("label");
-        tree2 = tree2.CREATE("label2");
+        tree = tree.CREATE("A");
+        tree2 = tree2.CREATE("B");
 //        Tree.printArray();
-        tree = tree.CREATE("label3", tree2);
-        tree = tree.CREATE("label4");
+        tree = tree.CREATE("C", tree2);
+        tree = tree.CREATE("D");
+        tree2 = tree2.CREATE("E");
+        tree = tree.CREATE("F", tree2);
 //        tree.makeNull();
-        System.out.println(tree);
         Tree.printArray();
         symmetricBypass(tree, tree.root());
     }

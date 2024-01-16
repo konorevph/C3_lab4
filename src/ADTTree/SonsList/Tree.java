@@ -115,15 +115,15 @@ public class Tree {
     Создаёт корень дерева с меткой V и 1 узел T
      */
     public Tree CREATE(String V, Tree T) {
-        // todo Проверить this == T
         if (SPACE == -1) return null;
         if (root == -1) return T.CREATE(V);
-        if (T.root == -1) return CREATE(V);
+        if (T.root == -1 || this == T) return CREATE(V);
 
         array[SPACE].label = V;
         array[SPACE].son = new Son(root, new Son(T.root, null));
         root = SPACE;
         SPACE = array[SPACE].next;
+        T.root = -1;
 
         return this;
     }
